@@ -1,0 +1,27 @@
+{
+  "name": "node-rezt",
+  "version": "1.0.0",
+  "description": "Easy to use and straightforward Express based library for building RESTFull Services",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fhmtz/node-rezt.git"
+  },
+  "keywords": [
+    "rest",
+    "express",
+    "server",
+    "api",
+    "library",
+    "easy"
+  ],
+  "author": "@fhmtz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fhmtz/node-rezt/issues"
+  },
+  "homepage": "https://github.com/fhmtz/node-rezt#readme"
+}
