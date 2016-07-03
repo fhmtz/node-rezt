@@ -1,0 +1,13 @@
+To do:
+  + Add log
+  + Support for logging parameters
+  + Create test suite
+  + Add support for IO journaling (Input and Output logging)
+  + Add Support text/plain bodies
+  + Create documentation
+
+Ideas:
+  + Add security
+    > Route/Method Level
+    > Token based
+  + SSL Support
