@@ -1,5 +1,6 @@
 var express = require('express')
 var winston = require('winston')
+var bodyParser = require('body-parser');
 
 module.exports = function(){
   var _xapp = express()
@@ -11,6 +12,9 @@ module.exports = function(){
       new (winston.transports.File)({ filename: 'log/rezt.log' })
     ]
   })
+
+  _xapp.use(bodyParser.json())
+  _xapp.use(bodyParser.text())
 
   var _initialize = function(name, options){
     _name = name.toLowerCase();
@@ -24,6 +28,23 @@ module.exports = function(){
   }
 
   var _addRouter = function(name, handlers){
+    var handleRequest = function(req, res, handler){
+      var request = {}
+      request.query = req.query
+      request.body = req.body
+      request.headers = req.headers
+      request.url = req.url
+      request.elementId = req.params.uid
+
+      var response = handler(request)
+
+      if (typeof response.code != "number"){
+        response.code = 296
+      }
+
+      res.status(response.code).json(response.response)
+    }
+
     var addMethod = function(method, handler){
       if (typeof handler == "function"){
         if (name.endsWith("/")){
@@ -32,19 +53,19 @@ module.exports = function(){
 
         switch (method) {
           case "list":
-            _xapp.get(name, handlers.list)
+            _xapp.get(name, function(req, res){handleRequest(req,res,handlers.list)})
             break;
           case "retrieve":
-            _xapp.get(name + "/:uid", handlers.retrieve)
+            _xapp.get(name + "/:uid", function(req, res){handleRequest(req,res,handlers.retrieve)})
             break;
           case "add":
-            _xapp.post(name, handlers.add)
+            _xapp.post(name, function(req, res){handleRequest(req,res,handlers.add)})
             break;
           case "modify":
-            _xapp.put(name+ "/:uid", handlers.modify)
+            _xapp.put(name+ "/:uid", function(req, res){handleRequest(req,res,handlers.modify)})
             break;
           case "remove":
-            _xapp.delete(name + "/:uid", handlers.remove)
+            _xapp.delete(name + "/:uid", function(req, res){handleRequest(req,res,handlers.remove)})
             break;
           default:
             _logger.warn("Unsupported method '"+method+"'.")

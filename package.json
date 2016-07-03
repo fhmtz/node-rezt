@@ -10,6 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/fhmtz/node-rezt.git"
   },
+  "dependencies": {
+    "express": ">= 4.14.0",
+    "winston": ">= 2.2.0",
+    "body-parser": ">= 1.15.2"
+  },
   "keywords": [
     "rest",
     "express",
